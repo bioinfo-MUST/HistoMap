@@ -21,6 +21,7 @@ Each tutorial includes practical examples with sample data and explanations of k
    ../notebooks/4_Segmentation.ipynb
    ../notebooks/1_Tissue_detection_HD.ipynb
    ../notebooks/2_Mapping_annotations_HD.ipynb
+   ../notebooks/3_Mapping_annotations_Xenium.ipynb
 
 
 Getting Help
