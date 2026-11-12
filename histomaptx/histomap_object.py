@@ -15,9 +15,10 @@ from . import histomap_utils
 import rasterio
 import tifffile
 from rasterio.errors import RasterioIOError
+from shapely.affinity import rotate
 
 class HistoMap:
-    def __init__(self, file_name, visium_spatialdata, full_res_path, visium_type=None, bin_size=None):
+    def __init__(self, file_name, visium_spatialdata, full_res_path, visium_type=None, bin_size=None, rotate_annotation=0):
         self.file_name = file_name
         self.visium_spatialdata = visium_spatialdata
 
@@ -42,7 +43,17 @@ class HistoMap:
         self.positive_threshold = self._setup_positive_threshold()
         self._setup_plot_order()
         self.annotation_colors = self._setup_annotation_color()
-        
+                
+        if rotate_annotation != 0:
+            self.data_exploded['geometry'] = self.data_exploded.geometry.apply(
+                lambda geom: rotate(
+                    geom,
+                    rotate_annotation,
+                    origin=(0, 0),
+                    use_radians=False
+                ) if geom is not None and not geom.is_empty else geom
+            )
+
             
     def __str__(self):
         try:
